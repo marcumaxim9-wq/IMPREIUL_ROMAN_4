@@ -826,12 +826,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Toate paginile
     initTimeline();          // nu face rău dacă elementele nu există
 
-    if (page === 'index.html' || page === '') {
+    if (page === 'index.html' || page === '' || page === 'index.php') {
         initEmperorsCarousel();
         initFlipCards();
+        initOracolInput();   // ← inițializare oracol Ajax
     }
 
-    if (page === 'cultura.html') {
+    if (page === 'cultura.html' || page === 'cultura.php') {
         initMonuments();
         initLanguageTree();
         initGodsGrid();
@@ -844,3 +845,123 @@ document.addEventListener('DOMContentLoaded', function() {
         el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
     });
 });
+
+
+/* ============================================================
+   16. ORACOLUL ROMAN — Ajax
+   Trimite întrebarea la ajax_oracol.php și afișează răspunsul
+   fără reîncărcarea paginii
+============================================================ */
+function initOracolInput() {
+    const input = document.getElementById('oracle-input');
+    if (!input) return;
+
+    // Permite trimiterea cu Enter
+    input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') intreabaOracolul();
+    });
+}
+
+// Setează textul dintr-un chip de sugestie în input
+window.setSuggestion = function(btn) {
+    const input = document.getElementById('oracle-input');
+    if (!input) return;
+    input.value = btn.textContent;
+    input.focus();
+};
+
+// Resetează la starea inițială
+window.resetOracol = function() {
+    document.getElementById('oracle-answer').classList.add('hidden');
+    document.getElementById('oracle-placeholder').classList.remove('hidden');
+    const input = document.getElementById('oracle-input');
+    if (input) { input.value = ''; input.focus(); }
+    document.getElementById('oracle-error').textContent = '';
+};
+
+// Funcția principală Ajax
+window.intreabaOracolul = function() {
+    const input   = document.getElementById('oracle-input');
+    const errEl   = document.getElementById('oracle-error');
+    const loading = document.getElementById('oracle-loading');
+    const answer  = document.getElementById('oracle-answer');
+    const placeholder = document.getElementById('oracle-placeholder');
+    const btn     = document.getElementById('oracle-btn');
+
+    if (!input) return;
+
+    const intrebare = input.value.trim();
+
+    // Validare client
+    errEl.textContent = '';
+    if (!intrebare) {
+        errEl.textContent = '⚠️ Scrie o întrebare mai întâi!';
+        input.focus();
+        return;
+    }
+    if (intrebare.length < 5) {
+        errEl.textContent = '⚠️ Întrebarea este prea scurtă (minim 5 caractere).';
+        input.focus();
+        return;
+    }
+
+    // UI: arată loading, ascunde restul
+    placeholder.classList.add('hidden');
+    answer.classList.add('hidden');
+    loading.classList.remove('hidden');
+    btn.disabled = true;
+    btn.querySelector('.oracle-btn-text').textContent = 'Se consultă...';
+
+    // Construiește FormData
+    const formData = new FormData();
+    formData.append('intrebare', intrebare);
+
+    // ---- CERERE AJAX ----
+    fetch('ajax_oracol.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(function(response) {
+        if (!response.ok) throw new Error('Eroare server: ' + response.status);
+        return response.json();
+    })
+    .then(function(data) {
+        loading.classList.add('hidden');
+        btn.disabled = false;
+        btn.querySelector('.oracle-btn-text').textContent = 'Consultă Oracolul';
+
+        if (!data.success) {
+            errEl.textContent = '⚠️ ' + (data.eroare || 'Eroare necunoscută.');
+            placeholder.classList.remove('hidden');
+            return;
+        }
+
+        // Populează răspunsul
+        document.getElementById('oracle-answer-icon').textContent     = data.icon;
+        document.getElementById('oracle-answer-question').textContent = data.intrebare;
+        document.getElementById('oracle-answer-title').textContent    = data.titlu;
+        document.getElementById('oracle-answer-text').textContent     = data.raspuns;
+        document.getElementById('oracle-answer-quote').textContent    = '📜 ' + data.citat;
+
+        // Animație de apariție
+        answer.classList.remove('hidden');
+        answer.style.opacity = '0';
+        answer.style.transform = 'translateY(20px)';
+        requestAnimationFrame(function() {
+            answer.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            answer.style.opacity = '1';
+            answer.style.transform = 'translateY(0)';
+        });
+
+        // Scroll la răspuns
+        answer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    })
+    .catch(function(err) {
+        loading.classList.add('hidden');
+        btn.disabled = false;
+        btn.querySelector('.oracle-btn-text').textContent = 'Consultă Oracolul';
+        placeholder.classList.remove('hidden');
+        errEl.textContent = '❌ Eroare de conexiune. Verifică serverul PHP și încearcă din nou.';
+        console.error('Ajax Oracol error:', err);
+    });
+};

@@ -92,6 +92,84 @@ $imperiumData = [
         <div class="flip-grid" id="flip-grid"></div>
     </section>
 
+    <!-- =============================================
+         ORACOLUL ROMAN — Secțiune Ajax
+    ============================================== -->
+    <section class="oracle-section reveal-section" id="oracle-section">
+        <h2 class="section-title">🔮 Oracolul Roman</h2>
+        <p class="section-sub">Pune o întrebare despre Imperiul Roman și primești răspunsul din arhivele antice</p>
+
+        <div class="oracle-container">
+
+            <!-- Formular întrebare -->
+            <div class="oracle-input-area">
+                <div class="oracle-input-wrap">
+                    <input
+                        type="text"
+                        id="oracle-input"
+                        class="oracle-input"
+                        placeholder="ex: Cine a fost Augustus? / Cum a căzut imperiul? / Ce era Colosseumul?"
+                        maxlength="200"
+                        autocomplete="off"
+                    >
+                    <button class="oracle-btn" id="oracle-btn" onclick="intreabaOracolul()">
+                        <span class="oracle-btn-text">Consultă Oracolul</span>
+                        <span class="oracle-btn-icon">🔮</span>
+                    </button>
+                </div>
+                <div class="oracle-error" id="oracle-error"></div>
+
+                <!-- Sugestii rapide -->
+                <div class="oracle-suggestions">
+                    <span class="suggestions-label">Sugestii:</span>
+                    <button class="suggestion-chip" onclick="setSuggestion(this)">Cine a fost Caesar?</button>
+                    <button class="suggestion-chip" onclick="setSuggestion(this)">Cum a căzut imperiul?</button>
+                    <button class="suggestion-chip" onclick="setSuggestion(this)">Ce era Colosseumul?</button>
+                    <button class="suggestion-chip" onclick="setSuggestion(this)">Traian și Dacia</button>
+                    <button class="suggestion-chip" onclick="setSuggestion(this)">Armata romană</button>
+                </div>
+            </div>
+
+            <!-- Zona de răspuns -->
+            <div class="oracle-response-area" id="oracle-response-area">
+
+                <!-- Loading -->
+                <div class="oracle-loading hidden" id="oracle-loading">
+                    <div class="oracle-loading-inner">
+                        <div class="oracle-flame">🔥</div>
+                        <div class="oracle-loading-text">Oracolul consultă arhivele antice...</div>
+                        <div class="oracle-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Răspuns -->
+                <div class="oracle-answer hidden" id="oracle-answer">
+                    <div class="oracle-answer-header">
+                        <span class="oracle-answer-icon" id="oracle-answer-icon">🏛️</span>
+                        <div>
+                            <div class="oracle-answer-label">Răspuns Oracol pentru:</div>
+                            <div class="oracle-answer-question" id="oracle-answer-question"></div>
+                        </div>
+                    </div>
+                    <h3 class="oracle-answer-title" id="oracle-answer-title"></h3>
+                    <p class="oracle-answer-text" id="oracle-answer-text"></p>
+                    <div class="oracle-answer-quote" id="oracle-answer-quote"></div>
+                    <button class="oracle-reset-btn" onclick="resetOracol()">🔄 Altă Întrebare</button>
+                </div>
+
+                <!-- Placeholder initial -->
+                <div class="oracle-placeholder" id="oracle-placeholder">
+                    <div class="oracle-placeholder-icon">🏛️</div>
+                    <div class="oracle-placeholder-text">Oracolul așteaptă întrebarea ta...</div>
+                    <div class="oracle-placeholder-sub">Consultă arhivele a 500 de ani de imperiu</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
     <!-- CTA -->
     <section class="cta-section reveal-section">
         <div class="cta-banner">

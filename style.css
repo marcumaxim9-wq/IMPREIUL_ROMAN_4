@@ -1683,3 +1683,274 @@ footer p { color: rgba(139,105,20,0.6); font-family: 'Cinzel', serif; font-size:
 .success-icon { font-size: 4rem; display: block; margin-bottom: 15px; }
 .form-success h3 { font-family: 'Cinzel', serif; color: #2d6a2d; font-size: 1.5rem; margin-bottom: 10px; }
 .form-success p { color: var(--text-mid); }
+
+
+/* ============================================================
+   ORACOLUL ROMAN — Stiluri Ajax
+============================================================ */
+.oracle-section {
+    padding: 80px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.oracle-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Input area */
+.oracle-input-area {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.oracle-input-wrap {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+}
+
+.oracle-input {
+    flex: 1;
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    font-family: 'Crimson Text', serif;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+}
+.oracle-input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+}
+.oracle-input::placeholder { color: var(--stone); opacity: 0.7; }
+
+.oracle-btn {
+    background: linear-gradient(135deg, var(--gold), #a87c2a);
+    color: #1a0a00;
+    border: none;
+    border-radius: var(--radius);
+    padding: 16px 28px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    white-space: nowrap;
+}
+.oracle-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(201,168,76,0.4);
+}
+.oracle-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+.oracle-btn-icon { font-size: 1.1rem; }
+
+.oracle-error {
+    color: #e05555;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.95rem;
+    min-height: 20px;
+}
+
+/* Sugestii */
+.oracle-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+.suggestions-label {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--stone);
+    text-transform: uppercase;
+    margin-right: 4px;
+}
+.suggestion-chip {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.9rem;
+    color: var(--text-mid);
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.suggestion-chip:hover {
+    background: rgba(201,168,76,0.1);
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+/* Zona de răspuns */
+.oracle-response-area {
+    min-height: 220px;
+    position: relative;
+}
+
+/* Loading */
+.oracle-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
+}
+.oracle-loading-inner {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+.oracle-flame {
+    font-size: 3rem;
+    animation: flicker 1.2s ease-in-out infinite alternate;
+}
+@keyframes flicker {
+    from { transform: scale(1) rotate(-3deg); opacity: 0.8; }
+    to   { transform: scale(1.15) rotate(3deg); opacity: 1; }
+}
+.oracle-loading-text {
+    font-family: 'Cinzel', serif;
+    font-size: 0.95rem;
+    color: var(--stone);
+    letter-spacing: 1px;
+}
+.oracle-dots {
+    display: flex;
+    gap: 8px;
+}
+.oracle-dots span {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: dotPulse 1.2s ease-in-out infinite;
+}
+.oracle-dots span:nth-child(2) { animation-delay: 0.2s; }
+.oracle-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dotPulse {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40%           { transform: scale(1);   opacity: 1; }
+}
+
+/* Placeholder */
+.oracle-placeholder {
+    text-align: center;
+    padding: 50px 20px;
+    opacity: 0.45;
+}
+.oracle-placeholder-icon { font-size: 3.5rem; margin-bottom: 12px; }
+.oracle-placeholder-text {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--stone);
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+}
+.oracle-placeholder-sub {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.9rem;
+    color: var(--stone);
+}
+
+/* Răspuns */
+.oracle-answer {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--gold);
+    border-radius: var(--radius);
+    padding: 32px;
+    box-shadow: 0 4px 30px var(--shadow);
+}
+.oracle-answer-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+}
+.oracle-answer-icon { font-size: 2.8rem; line-height: 1; flex-shrink: 0; }
+.oracle-answer-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--stone);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+.oracle-answer-question {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.05rem;
+    color: var(--gold);
+    font-style: italic;
+}
+.oracle-answer-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    color: var(--text-dark);
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+}
+.oracle-answer-text {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-mid);
+    margin-bottom: 20px;
+}
+.oracle-answer-quote {
+    background: rgba(201,168,76,0.08);
+    border-left: 3px solid var(--gold);
+    padding: 12px 18px;
+    font-family: 'Crimson Text', serif;
+    font-size: 1rem;
+    color: var(--stone);
+    font-style: italic;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 20px;
+}
+.oracle-reset-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 22px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    color: var(--stone);
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+}
+.oracle-reset-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(201,168,76,0.08);
+}
+
+/* Hidden utility */
+.hidden { display: none !important; }
+
+/* Responsive oracol */
+@media (max-width: 600px) {
+    .oracle-input-wrap { flex-direction: column; }
+    .oracle-btn { justify-content: center; }
+    .oracle-answer { padding: 22px 18px; }
+    .oracle-answer-header { flex-direction: column; gap: 10px; }
+}
